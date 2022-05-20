@@ -123,7 +123,7 @@ public:
 
   float GetDistance(void)
   {
-    float val = IrDistanceSensor::GetDistance() / high - low;
-    return min(0, max(val, 0));
+    float val = IrDistanceSensor::GetDistance() / (high - low);
+    return min(1, max(val, 0)); // clamp 
   }
 };
