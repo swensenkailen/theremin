@@ -1,0 +1,6 @@
+# only keep arduino.json
+**/.vscode/*
+!**/.vscode/arduino.json
+
+# never push binaries
+**/build

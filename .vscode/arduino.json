@@ -1,0 +1,5 @@
+{
+    "board": "arduino:mbed_rp2040:pico",
+    "sketch": "theremin.ino",
+    "output": "build"
+}
