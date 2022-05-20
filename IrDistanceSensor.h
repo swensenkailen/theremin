@@ -30,12 +30,11 @@
 // NOTE: it is possible for the sum to overflow, if 1 << sizeof(int) - ADC_RESOLUTION is less than SMOOTHING_SAMPLE_COUNT.
 // this should not be the case, as RP2040 ADC_RESOLUTION = 12bits and int >= 16bits.  giving us more than enough samples for smoothing.
 
-// TODO: implement absolute/relative modes.
-
 class IrDistanceSensor
 {
 private:
   int _pin = 0;
+
   int samples[SMOOTHING_SAMPLES] = { 0 };
   int curr_sample = 0;
 
@@ -97,8 +96,34 @@ public:
     }
   }
 
-  float GetDistanceCM(void)
+  float GetDistance(void)
   {
     return SENSOR_COEFF * pow(getSmoothed() * ADC_TO_VOLTS, SENSOR_EXPONENT);
+  }
+};
+
+class IrDistanceSensor_Relative : public IrDistanceSensor {
+private:
+  int low = 0, high = 1;
+
+public:
+  IrDistanceSensor_Relative(int pin) : IrDistanceSensor(pin)
+  {
+  }
+
+  void SetLow(void)
+  {
+    low = IrDistanceSensor::GetDistance();
+  }
+
+  void SetHigh(void)
+  {
+    high = IrDistanceSensor::GetDistance();
+  }
+
+  float GetDistance(void)
+  {
+    float val = IrDistanceSensor::GetDistance() / high - low;
+    return min(0, max(val, 0));
   }
 };

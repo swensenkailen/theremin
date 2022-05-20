@@ -8,6 +8,7 @@
 // #include <Button.h>
 #include "IrDistanceSensor.h"
 
+
 #define PIN_SENS_L A0
 #define PIN_SENS_R A1
 
@@ -25,14 +26,11 @@
 #define LOGGING_DELAY 50
 int last_log_millis = 0;
 
-IrDistanceSensor sensor_left(PIN_SENS_L),
-                 sensor_right(PIN_SENS_R);
+IrDistanceSensor_Relative sensor_left(PIN_SENS_L),
+                          sensor_right(PIN_SENS_R);
 
 void setup()
 {
-  // pinMode(PIN_SENS_L, INPUT);
-  // pinMode(PIN_SENS_R, INPUT);
-
 
   // TODO: use Kails button library
   // pinMode(PIN_BUTTON_1, INPUT_PULLUP);
@@ -54,9 +52,9 @@ void loop()
   unsigned long curr_millis = millis();
   if (curr_millis - last_log_millis > LOGGING_DELAY) {
     SerialUSB.print("Left Sensor: ");
-    SerialUSB.println(sensor_left.GetDistanceCM());
+    SerialUSB.println(sensor_left.GetDistance());
     SerialUSB.print("Right Sensor: ");
-    SerialUSB.println(sensor_right.GetDistanceCM());
+    SerialUSB.println(sensor_right.GetDistance());
   }
 
   delay(10);
