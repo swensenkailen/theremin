@@ -5,12 +5,10 @@
  * Written for RP2040
  */
 
-// #include <Button.h>
 #include "IrDistanceSensor.h"
 
-
-#define PIN_SENS_L A0
-#define PIN_SENS_R A1
+#define PIN_SENS_L A1
+#define PIN_SENS_R A0
 
 #define PIN_BUTTON_1 10
 #define PIN_BUTTON_2 11
@@ -31,14 +29,13 @@ IrDistanceSensor_Relative sensor_left(PIN_SENS_L),
 
 void setup()
 {
-
   // TODO: use Kails button library
   // pinMode(PIN_BUTTON_1, INPUT_PULLUP);
   // pinMode(PIN_BUTTON_2, INPUT_PULLUP);
   // pinMode(PIN_BUTTON_3, INPUT_PULLUP);
   // pinMode(PIN_BUTTON_4, INPUT_PULLUP);
 
-  SerialUSB.begin(9600);
+  SerialUSB.begin(11520);
 
   sensor_left.Init();
   sensor_right.Init();
@@ -49,12 +46,15 @@ void loop()
   sensor_left.sensorLoop();
   sensor_right.sensorLoop();
 
+  float left_val = sensor_left.GetDistance();
+  float right_val = sensor_right.GetDistance();
+
   unsigned long curr_millis = millis();
   if (curr_millis - last_log_millis > LOGGING_DELAY) {
-    SerialUSB.print("Left Sensor: ");
-    SerialUSB.println(sensor_left.GetDistance());
-    SerialUSB.print("Right Sensor: ");
-    SerialUSB.println(sensor_right.GetDistance());
+    SerialUSB.print("Left: ");
+    SerialUSB.println(left_val);
+    SerialUSB.print("Right: ");
+    SerialUSB.println(right_val);
   }
 
   delay(10);
