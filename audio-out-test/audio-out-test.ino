@@ -7,6 +7,10 @@
  * @date 2022-05-19
  */
 
+// PIN 16 for debugging,
+// Usually PIN2 2
+#define PIN_AUDIO 16
+
 // simple class for testing different rates of using the tone() function
 class SweepFreq
 {
@@ -28,8 +32,8 @@ class SweepFreq
         startFrequency = 0;
 
       // tone out on pins 2 and 3 (L/R of audio jack)
-      tone(2, startFrequency, delayPeriod);
-      delay(delayPeriod);
+      tone(PIN_AUDIO, startFrequency, delayPeriod * 5);
+      // delay(delayPeriod);
       startFrequency += frate;
     }
 
