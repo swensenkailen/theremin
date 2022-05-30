@@ -17,7 +17,7 @@ static float fmap (float in, float in_x, float in_y, float out_x, float out_y)
 class ToneSynth
 {
   public:
-    ToneSynth() : isActive(false), pinl(0), pinr(1), numChannels(0), currFrequency(0), 
+    ToneSynth() : isActive(true), pinl(0), pinr(1), numChannels(0), currFrequency(0), 
               maxFrequency (0), delayPeriod(0) { }
     
     ToneSynth(int p1, int p2, int nc, float cf, int mf,int dp) :
@@ -67,8 +67,6 @@ class ToneSynth
       if (isActive)
       {
         tone(pinl, currFrequency, delayPeriod);
-        if (numChannels > 1)
-          tone(pinr, currFrequency, delayPeriod);
 
         delay(delayPeriod);
       }

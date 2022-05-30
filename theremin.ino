@@ -12,8 +12,7 @@
 #define PIN_SENS_L A0
 #define PIN_SENS_R A1
 
-#define AUDIO_OUT_L 2
-#define AUDIO_OUT_R 3
+#define AUDIO_OUT_L 16
 
 #define PIN_BUTTON_1 10
 #define PIN_BUTTON_2 11
@@ -35,7 +34,7 @@ IrDistanceSensor_Relative sensor_left(PIN_SENS_L),
 
 void setup()
 {
-  synth.setPins(AUDIO_OUT_L, AUDIO_OUT_R);
+  synth.setPins(AUDIO_OUT_L);
   synth.setDelay(10);
   synth.setMaxFrequency(1500);
   // TODO: use Kails button library
@@ -55,20 +54,24 @@ void loop()
   sensor_left.sensorLoop();
   sensor_right.sensorLoop();
 
+  float left_val = sensor_left.GetDistance();
+  float right_val = sensor_right.GetDistance();
+
+
   // set delay based on left sensor distance
-  synth.setDelay(fmap(sensor_left.GetDistance(), 0.0f, 1.0f, 10.0f, 60.0f));
+  synth.setDelay(fmap(left_val, 0.0f, 1.0f, 10.0f, 60.0f));
+
   // set frequency based on left sensor distance
-  synth.setFrequency(fmap(sensor_right.GetDistance(), 
-                     0.0f, 1.0f, 110.0f, 1760.0f));
+  synth.setFrequency(fmap(right_val, 0.0f, 1.0f, 55.0f, 1760.0f * 2));
 
   unsigned long curr_millis = millis();
   if (curr_millis - last_log_millis > LOGGING_DELAY) 
   {
 
-    SerialUSB.print("Left Sensor: ");
-    //SerialUSB.println(sensor_left.GetDistance());
-    SerialUSB.print("Right Sensor: ");
-    SerialUSB.println(sensor_right.GetDistance());
+    SerialUSB.print("Left: ");
+    SerialUSB.println(left_val);
+    SerialUSB.print("Right: ");
+    SerialUSB.println(right_val);
   }
 
   synth.update();
