@@ -8,3 +8,9 @@ A wiring diagram is provided in the [build documentation](/docs/README.md)
 
 ### Sensor Test
 [test documentation](/sensor-test/README.md)
+
+### Button Test
+[test documentation](/button-test/README.md)
+
+### Audio Output Test
+[test documentation](/audio-out-test/README.md)
