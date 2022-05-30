@@ -10,7 +10,7 @@
 // #include <math.h>
 
 #ifndef SMOOTHING_SAMPLES
-#define SMOOTHING_SAMPLES (5u)
+#define SMOOTHING_SAMPLES (3u)
 #endif
 
 #ifndef SENSOR_PERIOD
@@ -104,7 +104,7 @@ public:
 
 class IrDistanceSensor_Relative : public IrDistanceSensor {
 private:
-  int low = 0, high = 1;
+  int low = 0, high = 2000;
 
 public:
   IrDistanceSensor_Relative(int pin) : IrDistanceSensor(pin)
@@ -124,6 +124,6 @@ public:
   float GetDistance(void)
   {
     float val = IrDistanceSensor::GetDistance() / (high - low);
-    return min(1, max(val, 0)); // clamp 
+    return min(1, max(val, 0)); // clamp
   }
 };
