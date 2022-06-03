@@ -24,7 +24,8 @@ class Buttons
   {
   }
 
-  void setup()
+  void Init()
+
   {
     // default settings
     initButtons();
