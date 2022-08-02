@@ -22,10 +22,10 @@ class Buttons
   // defaulted to demo circuit values
   Buttons() : gap(500), pin1(10), pin2(11), pin3(12), pin4(13)
   {
-    setup();
   }
 
-  void setup()
+  void Init()
+
   {
     // default settings
     initButtons();
